@@ -69,14 +69,13 @@
             {% if user.is_authenticated %}
                <button class="w-100 btn btn-primary" data-bs-toggle="collapse" data-bs-target="#exam">Start Exam</button>
                 <div id="exam" class="collapse">
-                    <form id="questionform" action="point to a submit view" method="post" class="grid" style="--bs-gap: 1rem;">
+                    <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post" class="grid" style="--bs-gap: 1rem;">
                         <!--... for each question in the course ... -->
-                        {% for lesson in course.lesson_set.all %}
-                            {% for question in lesson.question_set.all %}
+                            {% for question in course.question_set.all %}
                                 <div class="card mt-1">
                                     <div class="card-header"><h5>{{ question.question_text}}</h5></div>
                                     {% csrf_token %}
-                                    <div class="form-group">
+                                    <div class="card-body form-group">
                                     <!-- ... for each choice in the question ... -->
                                         {% for choice in question.choice_set.all %}
                                             <div class="form-check">
@@ -90,8 +89,7 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                        {% endfor %}
-                        <input class="w-100 btn btn-success btn-block " type="submit" value="Submit" style="margin-top:0.5rem;">
+                        <input class="w-100 btn btn-success btn-block " type="submit" value="Submit" style="margin:0.5rem 0;">
                     </form>     
                 </div>
             {% endif %}
